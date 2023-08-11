@@ -2,7 +2,7 @@ use dialoguer::{Input, Select};
 
 fn main() {
     // Main menu selection screen
-    let choices = vec!["Convert Temperature", "Nth term in Fibonacci Sequence"];
+    let choices = vec!["Convert Temperature", "Nth term in Fibonacci Sequence", "12 Days of Christmas"];
     let user_input = Select::new()
         .items(&choices)
         .interact()
@@ -11,6 +11,7 @@ fn main() {
     match user_input {
         0 => temp_conv_seq(),
         1 => fibonacci_sequence(),
+        2 => christmas_12_days(),
         _ => {
             println!("Input Error, please try again!");
             main()
@@ -54,6 +55,62 @@ fn fibonacci_sequence() {
     println!("{fib_value} is term number {input} in the Fibonacci sequence" )
 }
 
+fn christmas_12_days() {
+    let day_numbers: [&str; 12] = [
+        "first",
+        "second",
+        "third",
+        "fourth",
+        "fifth",
+        "sixth",
+        "seventh",
+        "eighth",
+        "ninth",
+        "tenth",
+        "eleventh",
+        "twelfth"
+    ];
+    
+    let lyrics: [&str; 12] = [
+        "A partridge in a pear tree",
+        "Two turtle doves",
+        "Three french hens",
+        "Four calling birds",
+        "Five golden rings",
+        "Six geese a-laying",
+        "Seven swans a-swimming",
+        "Eight maids a-milking",
+        "Nine ladies dancing",
+        "Ten lords a-leaping",
+        "Eleven pipers piping",
+        "Twelve drummers drumming",
+        
+        ];
+        
+    for i in 0..day_numbers.len()-1 {
+        println!("On the {} day of Christmas", &day_numbers[i]);
+        println!("My true love sent to me: ");
+        let stuff = &lyrics[0..i+1];
+        for (j, line) in stuff.iter().enumerate() {
+            let slice_length = stuff.len()-1;
+
+            // weird solution
+            if i != 0 {
+                if j == &slice_length-1 {
+                    println!("{} and", &line);
+                } else {
+                    println!("{}", &line);
+                }
+            } else {
+                println!("{}", &line);
+            }
+        }
+        println!("");
+    }
+
+ 
+}
+
 // Helper functions
 fn fahrenheit_celcius(temp: f32, input_type: &str) -> (f32, &str) {
     if input_type == "Celsius" {
@@ -75,3 +132,5 @@ fn fibonacci(n: u32) -> u32 {
         _ => fibonacci(n-1) + fibonacci(n-2)
     }
 }
+
+
