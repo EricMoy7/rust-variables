@@ -12,11 +12,6 @@ fn temp_conv_seq() {
         .interact()
         .unwrap();
 
-    // println!("Please enter a temperature in Farenheit you want to convert: ");
-    // io::stdin().read_line(&mut input).expect("Not a valid input");
-
-    // let input: f32 = input.trim().parse().expect("Not a valid number was inputted");
-
     let type_input = items[type_input];
 
 
