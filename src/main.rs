@@ -1,27 +1,48 @@
-use std::io;
+use dialoguer::{Input, Select};
 
 fn main() {
-    temp_conv_seq()
+    temp_conv_seq();
 }
 
 // Sequences
 fn temp_conv_seq() {
-    let f_temp: f32;
-    let c_temp: f32;
-    let mut input = String::new();
+    let items = vec!["Fahrenheit", "Celsius"];
+    let type_input = Select::new()
+        .items(&items)
+        .interact()
+        .unwrap();
 
-    println!("Please enter a temperature in Farenheit you want to convert: ");
-    io::stdin().read_line(&mut input).expect("Not a valid input");
+    // println!("Please enter a temperature in Farenheit you want to convert: ");
+    // io::stdin().read_line(&mut input).expect("Not a valid input");
 
-    f_temp = input.trim().parse().expect("Not a valid number was inputted");
+    // let input: f32 = input.trim().parse().expect("Not a valid number was inputted");
 
-    c_temp = convert_farenheit_celcius(f_temp);
+    let type_input = items[type_input];
 
-    println!("{}",c_temp)
+
+    let input: f32 = Input::new()
+        .with_prompt(format!("Enter temperature in {}", type_input))
+        .interact_text()
+        .unwrap();
+
+
+    let final_temp: (f32, &str) = fahrenheit_celcius(input, &type_input);
+
+    println!("{} \u{00B0} {} is {} \u{00B0} {}", input, type_input, final_temp.0, final_temp.1)
+
+    // final_temp
 }
 
 // Helper functions
-fn convert_farenheit_celcius(temperature_f: f32) -> f32 {
-     let temp_c: f32 = (temperature_f - 32.0) * (5.0/9.0);
-     temp_c
+fn fahrenheit_celcius(temp: f32, input_type: &str) -> (f32, &str) {
+    if input_type == "Celsius" {
+        let temp_f: f32 = (temp * 9.0/5.0) + 32.0;
+        (temp_f, "Fahrenheit")
+    } else if input_type == "Fahrenheit" {
+        let temp_c: f32 = (temp - 32.0) * (5.0/9.0);
+        (temp_c, "Celsuis")
+    } else {
+        println!("Invalid input type...");
+        (0.0, "Error")
+    }
 }
